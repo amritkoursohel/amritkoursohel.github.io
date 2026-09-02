@@ -86,7 +86,7 @@ export function downloadResumePDF() {
 
   const experiences = [
     {
-      role: 'Associate – Bill to Cash (GCB Process)',
+      role: 'Associate – Bill to Cash (Managed Enquiries)',
       period: '04/2022 — 09/2026',
       company: 'British Telecom E-Serve Pvt. Ltd',
       location: 'Kolkata, India',

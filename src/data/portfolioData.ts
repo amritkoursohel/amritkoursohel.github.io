@@ -169,7 +169,7 @@ export const PORTFOLIO_DATA = {
   experiences: [
     {
       id: "bt",
-      role: "Associate – Bill to Cash (GCB Process)",
+      role: "Associate – Bill to Cash (Managed Enquiries)",
       company: "British Telecom E-Serve Pvt. Ltd",
       location: "Kolkata, India",
       period: "04/2022 — 09/2026",
