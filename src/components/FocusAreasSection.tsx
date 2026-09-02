@@ -29,9 +29,7 @@ export const FocusAreasSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            whileHover={{ y: -3 }}
-            whileTap={{ scale: 0.98 }}
-            className={`glass-panel p-6 sm:p-8 rounded-xl border-l-4 ${item.borderColor} hover:shadow-xl transition-all duration-150 border-t border-r border-b border-slate-200/60 dark:border-neutral-800 cursor-pointer`}
+            className={`glass-panel p-6 sm:p-8 rounded-xl border-l-4 ${item.borderColor} border-t border-r border-b border-slate-200/60 dark:border-neutral-800`}
           >
             <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-2">
               {item.title}
