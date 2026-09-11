@@ -98,7 +98,6 @@ This repository powers Amrit Kour Sohel's official portfolio website, engineered
 ## 📬 Contact & Connect
 
 - **Email:** [amrit.koursohel@gmail.com](mailto:amrit.koursohel@gmail.com)
-- **Phone / WhatsApp:** [+91 82401 32767](https://wa.me/918240132767)
 - **LinkedIn:** [linkedin.com/in/amrit-kour-sohel-4u](https://www.linkedin.com/in/amrit-kour-sohel-4u/)
 - **Location:** Kolkata, India *(Available for immediate relocation to Dubai / UAE)*
 
