@@ -8,6 +8,7 @@ interface NavbarProps {
   onToggleTheme: () => void;
   onCopyEmail: () => void;
   onDownloaded?: () => void;
+  onNavigateHome?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -15,6 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme,
   onCopyEmail,
   onDownloaded,
+  onNavigateHome,
 }) => {
   const handleDownloadCV = () => {
     downloadResumePDF();
@@ -33,7 +35,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="flex justify-between items-center max-w-[1200px] mx-auto px-4 md:px-6 py-4">
         <a
-          className="text-base md:text-lg font-bold tracking-widest text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-neutral-300 transition-colors uppercase font-display"
+          onClick={(e) => {
+            if (onNavigateHome) {
+              onNavigateHome();
+            }
+          }}
+          className="text-base md:text-lg font-bold tracking-widest text-slate-900 dark:text-white hover:text-slate-600 dark:hover:text-neutral-300 transition-colors uppercase font-display cursor-pointer"
           href="#home"
         >
           {PORTFOLIO_DATA.personalInfo.name}
@@ -41,17 +48,19 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <div className="flex items-center gap-2 sm:gap-4">
           {/* CV Download Button */}
-          <motion.button
+          <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.12 }}
+            href="/Amrit_Kour_Sohel_CV.pdf"
+            download="Amrit_Kour_Sohel_CV.pdf"
             onClick={handleDownloadCV}
             className="flex items-center gap-1.5 text-slate-700 dark:text-neutral-300 hover:text-slate-950 dark:hover:text-white transition-colors duration-150 text-xs font-semibold uppercase tracking-wider hover-underline px-2.5 py-1.5 rounded-lg hover:bg-slate-100/70 dark:hover:bg-neutral-900 cursor-pointer"
             title="Download Amrit Kour Sohel's CV (PDF)"
           >
             <span className="material-symbols-outlined text-[18px]">download</span>
             <span>CV</span>
-          </motion.button>
+          </motion.a>
 
           {/* Email Copy Pill */}
           <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-300/80 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/80 backdrop-blur-sm hover:border-slate-400 dark:hover:border-neutral-600 transition-all duration-150 group shadow-xs">

@@ -12,6 +12,7 @@ import { WhatIBringSection } from './components/WhatIBringSection';
 import { FocusAreasSection } from './components/FocusAreasSection';
 import { CoreExpertiseSection } from './components/CoreExpertiseSection';
 import { ExperienceSection } from './components/ExperienceSection';
+import { CompanyDetailPage } from './components/CompanyDetailPage';
 import { SkillsSection } from './components/SkillsSection';
 import { WhyWorkWithMeSection } from './components/WhyWorkWithMeSection';
 import { EducationSection } from './components/EducationSection';
@@ -35,6 +36,30 @@ export default function App() {
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isResumeOpen, setIsResumeOpen] = useState<boolean>(false);
+  const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash.startsWith('#experience/')) {
+        const id = hash.replace('#experience/', '');
+        if (id) return id;
+      }
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#experience/')) {
+        const id = hash.replace('#experience/', '');
+        setSelectedCompanyId(id);
+      } else {
+        setSelectedCompanyId(null);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -96,6 +121,10 @@ export default function App() {
         isDark={isDark}
         onToggleTheme={toggleTheme}
         onCopyEmail={copyEmail}
+        onNavigateHome={() => {
+          setSelectedCompanyId(null);
+          window.history.pushState(null, '', '#home');
+        }}
         onDownloaded={() => {
           setToastMessage('Downloading Amrit Kour Sohel’s CV (PDF)...');
           setTimeout(() => setToastMessage(null), 3000);
@@ -104,15 +133,44 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main className="flex-grow">
-        <HeroSection />
-        <AboutSection />
-        <WhatIBringSection />
-        <FocusAreasSection />
-        <CoreExpertiseSection />
-        <ExperienceSection />
-        <SkillsSection />
-        <WhyWorkWithMeSection />
-        <EducationSection />
+        {selectedCompanyId ? (
+          <CompanyDetailPage
+            companyId={selectedCompanyId}
+            onBackToTimeline={() => {
+              setSelectedCompanyId(null);
+              window.history.pushState(null, '', '#experience');
+              setTimeout(() => {
+                const el = document.getElementById('experience');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 50);
+            }}
+            onSelectCompany={(id) => {
+              setSelectedCompanyId(id);
+              window.history.pushState(null, '', `#experience/${id}`);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        ) : (
+          <>
+            <HeroSection />
+            <AboutSection />
+            <WhatIBringSection />
+            <FocusAreasSection />
+            <CoreExpertiseSection />
+            <ExperienceSection
+              onSelectCompany={(id) => {
+                setSelectedCompanyId(id);
+                window.history.pushState(null, '', `#experience/${id}`);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+            <SkillsSection />
+            <WhyWorkWithMeSection />
+            <EducationSection />
+          </>
+        )}
       </main>
 
       {/* Footer & Contact Section */}

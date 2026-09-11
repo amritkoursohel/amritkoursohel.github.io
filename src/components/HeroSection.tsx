@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { downloadResumePDF } from '../utils/downloadPdf';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -56,7 +57,20 @@ export const HeroSection: React.FC = () => {
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.12 }}
+            href="/Amrit_Kour_Sohel_CV.pdf"
+            download="Amrit_Kour_Sohel_CV.pdf"
+            onClick={() => downloadResumePDF()}
             className="bg-slate-900 hover:bg-slate-800 dark:bg-neutral-100 dark:hover:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-semibold text-xs uppercase tracking-wider transition-colors duration-150 shadow-md hover:shadow-lg inline-flex items-center gap-2 cursor-pointer"
+            title="Download 1-page PDF Resume"
+          >
+            <span className="material-symbols-outlined text-base">download</span>
+            <span>Download CV (PDF)</span>
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.04, y: -2 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.12 }}
+            className="glass-button text-slate-800 dark:text-neutral-200 hover:bg-slate-100 dark:hover:bg-neutral-900 px-6 py-3 rounded-lg font-semibold text-xs uppercase tracking-wider transition-colors duration-150 inline-flex items-center gap-2 shadow-xs cursor-pointer border border-slate-300 dark:border-neutral-700"
             href="#contact"
           >
             <span>Get in Touch</span>
@@ -66,7 +80,7 @@ export const HeroSection: React.FC = () => {
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.12 }}
-            className="glass-button text-slate-800 dark:text-neutral-200 hover:bg-slate-100 dark:hover:bg-neutral-900 px-6 py-3 rounded-lg font-semibold text-xs uppercase tracking-wider transition-colors duration-150 inline-flex items-center gap-2 shadow-xs cursor-pointer"
+            className="glass-button text-slate-800 dark:text-neutral-200 hover:bg-slate-100 dark:hover:bg-neutral-900 px-6 py-3 rounded-lg font-semibold text-xs uppercase tracking-wider transition-colors duration-150 inline-flex items-center gap-2 shadow-xs cursor-pointer border border-slate-300 dark:border-neutral-700"
             href="#expertise"
           >
             <span>View Expertise</span>

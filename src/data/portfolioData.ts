@@ -46,6 +46,17 @@ export interface EducationItem {
   subtitle: string;
 }
 
+export interface CertificationItem {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  duration: string;
+  skills: string[];
+  certificateId: string;
+  category: 'AI & Cloud' | 'Leadership & Management' | 'Communication & Service' | 'Ethics & Strategy' | 'Productivity & Growth';
+}
+
 export const PORTFOLIO_DATA = {
   personalInfo: {
     name: "AMRIT KOUR SOHEL",
@@ -62,15 +73,15 @@ export const PORTFOLIO_DATA = {
     visaStatus: "Visit Visa / Available for Sponsorship",
     relocation: "Ready for immediate relocation to Dubai/UAE",
     linkedinUrl: "https://www.linkedin.com/in/amrit-kour-sohel-4u/",
-    telegramUrl: "#",
+    telegramUrl: "https://t.me/+918240132767",
     heroImage:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB0IWuat3at2AZj9NUwwfF-m8sNEVleuuPrwlVjn7aXm8F6raBABmyt2TfBe0njpx6KI5Cg97OuR8w-DmQ2lz_kFxXXczfCYKe2yCDHGblNHHtPB9TInQ4YlLCRuXMrcFwEG8DXj6cRRgEN-rWRbTLYRtikEt1hjr207dijJsc8BQn1TdaHfoXiLVDz0eDdkLMr4h-PzFqfJaREhrHnKA5P4g5MWzYOLR31DfJR7buOnKCVeYZCkukP1DsNHptBN3PjLw",
     aboutImage:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuA6j5M8C6zZtiz5g-kFLXVjabHM_OpW8tDj2ha_piIGrc6pVoWmDH4nGVQgH6fDlmjZRIQjDY0gCtpykeu_CHH-NvrWSKgsYGHdVQ5TWJvrW75zFp7YO0NEN6mVUazeUnBKtcCq6BEXqoX2SCHgXD8lGgvDli7hD0tMjdLzPAUmWicrXooinNHkGKwki7BJLrqXyf-NWA-2exGK2mQYrDBhgjSq2SK3nbLr0yLEy4JtWxgWtbZHnE0zz6FHwyU1JHd-CA",
     footerImage:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB0AkGWektdP1r1ik7KQw_Tt-_jfMiCYIBY4gDtWRIrPHjJid7zJOBRgCCOyMEaxFWMgt3Aml0NxngKGVjxTnGCucc-0J-cLCv1XACXHHQfmyoPjWQHaVLwszJ6213iJ1poEQ2lYHN6WEiHW942Ru1Ap29y8_LNylsubcOe8AUrmao-2_LFoPH8qPTx-JhMGG1rFshFEx8g3hANc7QQVk1gmYmyPhaFCbbUPAVNPmNoF1TWI5KmutzO",
-    telegramIcon:
-      "https://lh3.googleusercontent.com/aida/AEtjO1U6ayrY01xl6SgWPvd0o_5VLA5_zl_LwWMazCu9_pYJmnI0BAiRqARcqARVet4Qoehu_gRfi2ipsn_sFwXV6aCottDC5ghX0PQHlqK50FoGPmROBNGHpsr3eGag0BtxK8ejoDkzEsapkXO3a36A3DarKhzEIxttqSP9sxK77gs6472ipIeH9yRD0c7XfxdzuAgKuLvCF9Af6K7z_6eVmRviAPpmafl12qd5bnlsC5rCIJMyl4p_7IM3Gg",
+    telegramIcon: "/assets/telegram-logo.svg",
+    whatsappIcon: "/assets/whatsapp-logo.svg",
   },
 
   aboutParagraphs: [
@@ -169,7 +180,7 @@ export const PORTFOLIO_DATA = {
   experiences: [
     {
       id: "bt",
-      role: "Associate – Bill to Cash (Managed Enquiries)",
+      role: "Associate – Bill to Cash (GCB Process)",
       company: "British Telecom E-Serve Pvt. Ltd",
       location: "Kolkata, India",
       period: "04/2022 — 09/2026",
@@ -240,7 +251,7 @@ export const PORTFOLIO_DATA = {
       company: "A.N. John",
       location: "Kolkata, India",
       period: "2013 — 2014",
-      logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfCHg5QUBMrHj-MYhSbDC0qLB9QNXPS7xHndQLDl738-c8U7mwOZYqgwicCrc35s8Wz0EgWMHp65GqM-z6CbGR2qL-HChaU5hKg1wTwfJPDK1FQWQSPB0y65mRJyjmJTSq5nl8Xi5zBY6S9XNUXkuUivESOo_VxK2eufb8r4kqTXxNs3OHHJIjo7_vX89-nTtRilxddeZNnCG-TKGLVRL2TB8eTzUjeSUA0Vi0fQ0UI2kSirJVpL-rp5n3eRBuTflEiQ",
+      logo: "/assets/anjohn-logo.png",
       logoAlt: "A.N. John",
       bullets: [
         "Processed **200+** monthly reservations with **99%** accuracy; managed booking changes and cancellations",
@@ -389,7 +400,7 @@ export const PORTFOLIO_DATA = {
       icon: "workspace_premium",
       title: "Professional Certifications",
       subtitle:
-        "Power BI Fundamentals, ServiceNow Fundamentals, Customer Service Excellence, Advanced Excel",
+        "21 Verified LinkedIn Learning Certifications (AI, Cloud, Leadership, Operations & Communication)",
     },
     {
       id: "lang-1",
@@ -399,4 +410,217 @@ export const PORTFOLIO_DATA = {
         "English (Professional), Hindi (Professional), Punjabi (Native), Bengali (Conversational)",
     },
   ],
+
+  certifications: [
+    {
+      id: "cert-ai",
+      title: "Introduction to Artificial Intelligence",
+      issuer: "LinkedIn Learning",
+      date: "Apr 30, 2025",
+      duration: "2h 26m",
+      skills: ["Artificial Intelligence (AI)"],
+      certificateId: "052c956ebc637cefe2372f0c4e5bb8f8ad2b1c7216fa9b7f98ba22f796283640",
+      category: "AI & Cloud",
+    },
+    {
+      id: "cert-cloud",
+      title: "Cloud for Business: Developing a Cloud Center of Excellence",
+      issuer: "LinkedIn Learning",
+      date: "Oct 14, 2025",
+      duration: "48m",
+      skills: ["Cloud Administration"],
+      certificateId: "7b55dd24bc26b48f03822fcdef33375bdb7c8d0621b79c4a0ac0cb314cabf196",
+      category: "AI & Cloud",
+    },
+    {
+      id: "cert-accountability",
+      title: "Holding Your Team Accountable",
+      issuer: "LinkedIn Learning",
+      date: "Apr 30, 2025",
+      duration: "1h 6m",
+      skills: ["Accountability", "People Management"],
+      certificateId: "65a4eee9b865f125fccdde3c2680321ac45a5e8323cb8f817177a3f39f96d03c",
+      category: "Leadership & Management",
+    },
+    {
+      id: "cert-leadership-women",
+      title: "Leadership Strategies for Women",
+      issuer: "LinkedIn Learning",
+      date: "Apr 30, 2025",
+      duration: "1h 6m",
+      skills: ["Women's Leadership"],
+      certificateId: "703cb38e6948b80f679305b017f2556722fd2984a86e8aa06459682515e2b61a",
+      category: "Leadership & Management",
+    },
+    {
+      id: "cert-employee-relations",
+      title: "Introduction to Employee Relations",
+      issuer: "LinkedIn Learning",
+      date: "Mar 31, 2025",
+      duration: "51m",
+      skills: ["Employee Relations"],
+      certificateId: "6a2805dc4cd4ac9c8cf5a2c44322b6898b9c5c5375bf9433e1b7104ea1021d8d",
+      category: "Leadership & Management",
+    },
+    {
+      id: "cert-listening-customers",
+      title: "Listening to Customers (2017)",
+      issuer: "LinkedIn Learning",
+      date: "Jan 07, 2025",
+      duration: "16m",
+      skills: ["Customer Service", "Active Listening"],
+      certificateId: "25ea92322b1ee712aa1b9e4e54e4814d28173f052a5cd5a5d9cf20178b7d4b5a",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-writing-emails",
+      title: "Writing Emails People Want to Read",
+      issuer: "LinkedIn Learning",
+      date: "Jan 07, 2025",
+      duration: "57m",
+      skills: ["Email", "Written Communication"],
+      certificateId: "ffb93996ef7bfd0cee0b36382ab0eab252c5e2cb6b083389e9122279952ca908",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-emotional-intelligence",
+      title: "Communicating with Emotional Intelligence",
+      issuer: "LinkedIn Learning",
+      date: "Jan 17, 2025",
+      duration: "43m",
+      skills: ["Emotional Intelligence", "Interpersonal Communication"],
+      certificateId: "9769ecb59627d6a46641385d0080032ccadf5a52ad6cd714815ab2d9e607f6e5",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-comm-foundations",
+      title: "Communication Foundations",
+      issuer: "LinkedIn Learning",
+      date: "Jan 24, 2025",
+      duration: "1h 10m",
+      skills: ["Interpersonal Communication", "Professional Communication"],
+      certificateId: "7f95199b04bc71185925f80828c6b1a48ede0a4b265dd9c1a3088fd3cd3bbfbb",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-comm-confidence",
+      title: "Communicating with Confidence (2015)",
+      issuer: "LinkedIn Learning",
+      date: "Feb 10, 2025",
+      duration: "1h 16m",
+      skills: ["Public Speaking"],
+      certificateId: "bde7a322dceeed4881e796fee31f54dcb763b5cde05dcbfb8a0821a06bf1e133",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-3-minute-rule",
+      title: "The 3-Minute Rule: Say Less to Get More",
+      issuer: "LinkedIn Learning",
+      date: "Mar 24, 2025",
+      duration: "52m",
+      skills: ["Story Pitching", "Presentation Skills"],
+      certificateId: "387d798f28fb37bf359fbe39c9db7b6af2a413b46103fcef75cccaf8a131a90e",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-inclusive-linkedin",
+      title: "Inclusive and Professional Conversations on LinkedIn: Tips for Success",
+      issuer: "LinkedIn Learning",
+      date: "Feb 25, 2025",
+      duration: "28m",
+      skills: ["Professional Communication", "Diversity & Inclusion"],
+      certificateId: "fcb96ed91e3745acbaddd999a05799575ace3dedae78f29843a38b343a3fa716",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-starting-conversation",
+      title: "Starting a Memorable Conversation",
+      issuer: "LinkedIn Learning",
+      date: "Dec 01, 2024",
+      duration: "29m",
+      skills: ["Oral Communication"],
+      certificateId: "caec893e70fb627eb125a7a59cee2b23d43a364d16c08d1f0494d52ed335c4ec",
+      category: "Communication & Service",
+    },
+    {
+      id: "cert-critical-thinking",
+      title: "Critical Thinking for More Effective Communication",
+      issuer: "LinkedIn Learning",
+      date: "Feb 25, 2025",
+      duration: "46m",
+      skills: ["Critical Thinking"],
+      certificateId: "a527605496e92d9db7c3b801facace904c9122817be3c6579d115b1be6f71a01",
+      category: "Ethics & Strategy",
+    },
+    {
+      id: "cert-decision-making",
+      title: "Improving Your Judgment for Better Decision-Making",
+      issuer: "LinkedIn Learning",
+      date: "Feb 25, 2025",
+      duration: "30m",
+      skills: ["Decision-Making"],
+      certificateId: "3e58118205949875cf78383a691dec12a97a839a08d1d5546fb7f02fa86f22d7",
+      category: "Ethics & Strategy",
+    },
+    {
+      id: "cert-values-ethics",
+      title: "Values and Ethics: Case Studies in Action",
+      issuer: "LinkedIn Learning",
+      date: "Mar 24, 2025",
+      duration: "42m",
+      skills: ["Organizational Ethics"],
+      certificateId: "8ce30ce255d586acaf33da0a2e73ec9e09d937455caebf1b8b9eea3ac67784f8",
+      category: "Ethics & Strategy",
+    },
+    {
+      id: "cert-upskill",
+      title: "Strategies to Learn and Upskill More Effectively",
+      issuer: "LinkedIn Learning",
+      date: "Mar 31, 2025",
+      duration: "1h",
+      skills: ["Learning Strategies"],
+      certificateId: "c99547893c3144ec1d53264eed97b891940ebf9de72c81ccb4cb1c1b97b330ef",
+      category: "Productivity & Growth",
+    },
+    {
+      id: "cert-coping",
+      title: "Coping Strategies in Difficult Times",
+      issuer: "LinkedIn Learning",
+      date: "Apr 10, 2025",
+      duration: "34m",
+      skills: ["Coping"],
+      certificateId: "fd4f714427df004eaf5f885a348f0f0ff8e5a1381e4eb4c95994d65942738beb",
+      category: "Productivity & Growth",
+    },
+    {
+      id: "cert-authentic-relationships",
+      title: "Using Authenticity to Build Productive Relationships",
+      issuer: "LinkedIn Learning",
+      date: "May 01, 2025",
+      duration: "34m",
+      skills: ["Relationship Building"],
+      certificateId: "286e788ef904e677051648ffba7bb690de4c51d1fa75bc69ab992d5220692656",
+      category: "Productivity & Growth",
+    },
+    {
+      id: "cert-authentic-self",
+      title: "Developing Your Authentic Self to Ignite Change",
+      issuer: "LinkedIn Learning",
+      date: "May 01, 2025",
+      duration: "55m",
+      skills: ["Personal Branding", "Gender-Inclusive Career Support", "Personal Development"],
+      certificateId: "ba9e3a658eb8fc8e782b4bffcd0606f86fdd1abba9f1a98565b8c19be55eea0d",
+      category: "Productivity & Growth",
+    },
+    {
+      id: "cert-unique-habits",
+      title: "Unique Habits: Be Successful Your Own Way",
+      issuer: "LinkedIn Learning",
+      date: "May 01, 2025",
+      duration: "40m",
+      skills: ["Productivity Improvement"],
+      certificateId: "b4aedba161daa600bac438160b6bde60c8830ff847d70e7cdcc5f4054013915e",
+      category: "Productivity & Growth",
+    },
+  ] as CertificationItem[],
 };

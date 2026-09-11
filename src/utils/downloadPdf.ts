@@ -7,89 +7,128 @@ export function downloadResumePDF() {
     format: 'a4',
   });
 
-  const pageWidth = doc.internal.pageSize.getWidth(); // ~595.28 pt
-  const pageHeight = doc.internal.pageSize.getHeight(); // ~841.89 pt
-  const marginX = 36;
-  const contentWidth = pageWidth - marginX * 2; // ~523.28 pt
+  const pageWidth = doc.internal.pageSize.getWidth(); // 595.28 pt
+  const pageHeight = doc.internal.pageSize.getHeight(); // 841.89 pt
+  const marginX = 36; // 0.5 in margin
+  const contentWidth = pageWidth - marginX * 2; // 523.28 pt
 
-  let y = 38;
-
-  const checkPageBreak = (neededHeight: number) => {
-    if (y + neededHeight > pageHeight - 36) {
-      doc.addPage();
-      y = 38;
-      return true;
-    }
-    return false;
-  };
-
-  const drawSectionHeader = (title: string) => {
-    checkPageBreak(30);
-    y += 8;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10.5);
-    doc.setTextColor(15, 23, 42); // #0f172a
-    doc.text(title.toUpperCase(), marginX, y);
-    y += 4;
-    doc.setDrawColor(203, 213, 225); // #cbd5e1
-    doc.setLineWidth(1);
-    doc.line(marginX, y, marginX + contentWidth, y);
-    y += 10;
-  };
+  let y = 26;
 
   // --- HEADER ---
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(17);
-  doc.setTextColor(15, 23, 42);
+  doc.setFontSize(13.5);
+  doc.setTextColor(15, 15, 15);
   doc.text('AMRIT KOUR SOHEL', pageWidth / 2, y, { align: 'center' });
-  y += 13;
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.5);
-  doc.setTextColor(51, 65, 85);
-  doc.text('Telecom Customer Service & Billing Operations Professional', pageWidth / 2, y, { align: 'center' });
-  y += 11;
+  y += 11.5;
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.5);
-  doc.setTextColor(71, 85, 105);
-  doc.text('amrit.koursohel@gmail.com  |  +91 82401 32767 (WhatsApp)  |  Indian National', pageWidth / 2, y, { align: 'center' });
+  doc.setFontSize(8.0);
+  doc.setTextColor(30, 30, 30);
+  doc.text('Telecom Customer Service & Billing Operations Professional', pageWidth / 2, y, { align: 'center' });
   y += 10;
 
-  doc.setFontSize(8);
-  doc.setTextColor(100, 116, 139);
+  const contactLine = 'amrit.koursohel@gmail.com | +91 82401 32767 (WhatsApp) | Indian National';
+  doc.text(contactLine, pageWidth / 2, y, { align: 'center' });
+  try {
+    const emailStr = 'amrit.koursohel@gmail.com';
+    const emailW = doc.getTextWidth(emailStr);
+    const lineW = doc.getTextWidth(contactLine);
+    const emailX = (pageWidth - lineW) / 2;
+    doc.link(emailX, y - 7, emailW, 9, { url: 'mailto:amrit.koursohel@gmail.com' });
+  } catch {
+    // optional link
+  }
+  y += 10;
+
   doc.text('Currently: Kolkata, India | Visa Status: Visit Visa / Available for Sponsorship | Ready for immediate relocation to Dubai/UAE', pageWidth / 2, y, { align: 'center' });
   y += 10;
 
-  doc.text('LinkedIn: linkedin.com/in/amrit-kour-sohel-4u', pageWidth / 2, y, { align: 'center' });
+  // LinkedIn line with blue link
+  const linkedInPrefix = 'LinkedIn: ';
+  const linkedInUrl = 'linkedin.com/in/amrit-kour-sohel-4u';
+  const fullLinkedIn = linkedInPrefix + linkedInUrl;
+  const totalWidth = doc.getTextWidth(fullLinkedIn);
+  const startX = (pageWidth - totalWidth) / 2;
+
+  doc.setTextColor(30, 30, 30);
+  doc.text(linkedInPrefix, startX, y);
+  doc.setTextColor(10, 80, 190);
+  const urlX = startX + doc.getTextWidth(linkedInPrefix);
+  doc.text(linkedInUrl, urlX, y);
+  try {
+    doc.link(urlX, y - 7, doc.getTextWidth(linkedInUrl), 9, { url: 'https://www.linkedin.com/in/amrit-kour-sohel-4u' });
+  } catch {
+    // optional link
+  }
   y += 8;
 
-  // Header bottom divider
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(1.2);
+  // Divider line
+  doc.setDrawColor(210, 210, 210);
+  doc.setLineWidth(0.6);
   doc.line(marginX, y, marginX + contentWidth, y);
-  y += 6;
+  y += 9.5;
+
+  // Section Header Helper
+  const drawSectionHeader = (title: string) => {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(0, 0, 0);
+    doc.text(title, marginX, y);
+    y += 8.5;
+  };
+
+  // Bullet drawing helper with hanging indent
+  const drawBullet = (text: string, indent: number = 3) => {
+    const bulletSymbol = '•';
+    const bulletWidth = 9;
+    const textWidth = contentWidth - indent - bulletWidth;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.0);
+    doc.setTextColor(25, 25, 25);
+
+    const lines = doc.splitTextToSize(text, textWidth);
+
+    // Draw bullet dot
+    doc.text(bulletSymbol, marginX + indent, y);
+
+    // Draw lines
+    lines.forEach((line: string, index: number) => {
+      doc.text(line, marginX + indent + bulletWidth, y + (index * 8.3));
+    });
+
+    y += lines.length * 8.3 + 0.8;
+  };
 
   // --- PROFESSIONAL SUMMARY ---
-  drawSectionHeader('Professional Summary');
+  drawSectionHeader('PROFESSIONAL SUMMARY');
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.5);
-  doc.setTextColor(51, 65, 85);
+  doc.setFontSize(7.0);
+  doc.setTextColor(25, 25, 25);
   const summaryText =
     'Telecom Customer Service & Billing Operations Professional with 15+ years of experience across telecom, banking, logistics, hospitality, and client-facing operations, currently supporting UK corporate customers on the British Telecom (BT) bill-to-cash process. Proven record in escalation handling, high-volume customer support, billing resolution, MIS reporting, and cross-functional coordination with account managers, operations teams, vendors, and senior leadership. Strong analytical, problem-solving, and multitasking abilities with attention to detail and effective time management. Demonstrates practical leadership through ownership of client issues, front-office operations, service coordination, business partnerships, and confidential executive support. Skilled in MS Office, ServiceNow, Excel Pivot Tables, documentation control, calendar and travel coordination, process improvement, and AI tools including ChatGPT, Claude, Perplexity, Microsoft Copilot, Gamma AI, and Prompt Engineering.';
-  const summaryLines = doc.splitTextToSize(summaryText, contentWidth);
-  doc.text(summaryLines, marginX, y, { align: 'justify', maxWidth: contentWidth });
-  y += summaryLines.length * 10 + 2;
+  const sumLines = doc.splitTextToSize(summaryText, contentWidth);
+  sumLines.forEach((line: string) => {
+    doc.text(line, marginX, y);
+    y += 8.3;
+  });
+  y += 3.5;
 
   // --- PROFESSIONAL EXPERIENCE ---
-  drawSectionHeader('Professional Experience');
+  drawSectionHeader('PROFESSIONAL EXPERIENCE');
 
-  const experiences = [
+  interface ExpItem {
+    title: string;
+    period: string;
+    company: string;
+    bullets: string[];
+  }
+
+  const experiences: ExpItem[] = [
     {
-      role: 'Associate – Bill to Cash (Managed Enquiries)',
+      title: 'Associate – Bill to Cash (GCB Process)',
       period: '04/2022 — 09/2026',
-      company: 'British Telecom E-Serve Pvt. Ltd',
-      location: 'Kolkata, India',
+      company: 'British Telecom E-Serve Pvt. Ltd — Kolkata, India',
       bullets: [
         'Recovered GBP 4.63 million (GBP 4,634,857) in outstanding corporate debt in the last quarter through structured follow-up and dispute resolution',
         'Serve a portfolio of major B2B corporate, public-sector and global accounts — including HSBC, Abbott International, Coventry University, Pinsent Masons LLP, QA Ltd and The Global Draw',
@@ -103,10 +142,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Customer Service Executive (BNSF Logistics)',
+      title: 'Customer Service Executive (BNSF Logistics)',
       period: '11/2020 — 03/2022',
-      company: 'NLB Services Pvt. Ltd',
-      location: 'Kolkata, India',
+      company: 'NLB Services Pvt. Ltd — Kolkata, India',
       bullets: [
         'Handled 100+ daily inbound and outbound calls to US dispatchers and truck drivers, ensuring accurate updates on arrival and departure times',
         'Communicated with brokers and dispatchers via email to resolve delivery issues, achieving a 95% on-time update rate',
@@ -115,10 +153,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Client Relations & Operations Manager',
+      title: 'Client Relations & Operations Manager',
       period: '2017 — 2019',
-      company: 'Get Gorgeous Salon',
-      location: 'Kolkata, India',
+      company: 'Get Gorgeous Salon — Kolkata, India',
       bullets: [
         'Managed reservations and appointment scheduling for 50+ daily clients; processed bookings, changes, and cancellations',
         'Drove upselling of premium services and packages; increased bookings by 40% and improved referrals by 35%',
@@ -127,10 +164,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Client Operations Manager',
+      title: 'Client Operations Manager',
       period: '2014 — 2017',
-      company: 'Cerise Salon',
-      location: 'Kolkata, India',
+      company: 'Cerise Salon — Kolkata, India',
       bullets: [
         'Managed front-desk and reservation operations for 50+ daily clients in a premium service environment',
         'Upsold services and products; maintained 98% stock availability and handled vendor coordination',
@@ -139,10 +175,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Front Desk / Scheduling Coordinator',
+      title: 'Front Desk / Scheduling Coordinator',
       period: '2013 — 2014',
-      company: 'A.N. John Pvt. Ltd',
-      location: 'Kolkata, India',
+      company: 'A.N. John Pvt. Ltd — Kolkata, India',
       bullets: [
         'Processed 200+ monthly reservations with 99% accuracy; managed booking changes and cancellations',
         'Served as first point of contact; handled guest calls, inquiries, and follow-up communications',
@@ -150,10 +185,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Executive Assistant to Director',
+      title: 'Executive Assistant to Director',
       period: '12/2010 — 11/2012',
-      company: 'Ural India Ltd',
-      location: 'Kolkata, India',
+      company: 'Ural India Ltd — Kolkata, India',
       bullets: [
         'Managed the Director’s schedule, coordinated 25+ weekly meetings, and organized business travel itineraries',
         'Drafted purchase orders and quotations, processed 100+ orders quarterly',
@@ -162,10 +196,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Associate, Credit Card Department',
+      title: 'Associate, Credit Card Department',
       period: '11/2008 — 05/2010',
-      company: 'HSBC (HOPE)',
-      location: 'Kolkata, India',
+      company: 'HSBC (HOPE) — Kolkata, India',
       bullets: [
         'Resolved 80+ internet banking queries daily via email, maintaining a 94% customer satisfaction score',
         'Liaised with multiple departments to resolve customer complaints, conducting root cause analysis to reduce recurring issues by 25%',
@@ -174,10 +207,9 @@ export function downloadResumePDF() {
       ],
     },
     {
-      role: 'Guest Executive / PATP Consultant',
+      title: 'Guest Executive / PATP Consultant',
       period: '01/2007 — 01/2008',
-      company: 'The Park Hotel, Kolkata',
-      location: 'Kolkata, India',
+      company: 'The Park Hotel, Kolkata — Kolkata, India',
       bullets: [
         'Promoted from PATP Consultant to Guest Executive within 11 months for outstanding performance',
         'Outbound sales of hotel membership cards, exceeding monthly sales targets by 20%',
@@ -188,98 +220,94 @@ export function downloadResumePDF() {
   ];
 
   experiences.forEach((exp) => {
-    checkPageBreak(35);
-
-    // Role line + Period
+    // Title + Period on same line
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.setTextColor(15, 23, 42);
-    doc.text(exp.role, marginX, y);
+    doc.setFontSize(7.4);
+    doc.setTextColor(15, 15, 15);
+    doc.text(exp.title, marginX, y);
 
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
-    doc.setTextColor(51, 65, 85);
-    doc.text(exp.period, marginX + contentWidth, y, { align: 'right' });
-    y += 10;
-
-    // Company line
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
-    doc.setTextColor(71, 85, 105);
-    doc.text(`${exp.company} — ${exp.location}`, marginX, y);
-    y += 9;
+    doc.setFontSize(7.2);
+    doc.text(exp.period, marginX + contentWidth, y, { align: 'right' });
+    y += 8.2;
+
+    // Company line (italicized)
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(7.0);
+    doc.setTextColor(30, 30, 30);
+    doc.text(exp.company, marginX, y);
+    y += 7.4;
 
     // Bullets
-    doc.setFontSize(8);
-    doc.setTextColor(51, 65, 85);
     exp.bullets.forEach((bullet) => {
-      checkPageBreak(16);
-      const bulletLines = doc.splitTextToSize(`•  ${bullet}`, contentWidth - 8);
-      doc.text(bulletLines, marginX + 4, y);
-      y += bulletLines.length * 9.5;
+      drawBullet(bullet, 3);
     });
-
-    y += 3;
+    y += 1.0;
   });
+
+  y += 2.0;
 
   // --- KEY SKILLS ---
-  drawSectionHeader('Key Skills');
+  drawSectionHeader('KEY SKILLS');
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(51, 65, 85);
-
-  const skillsList = [
-    '• Customer Support • Billing Support • Invoice Processing • Accounts Receivable • Debt Recovery • Credit & Adjustments',
-    '• Bill to Cash (B2C) • Escalation Handling • Client Relations • Front Desk Operations • Administrative Operations',
-    '• Appointment Scheduling • Calendar Management • Meeting Coordination • Travel Coordination • Documentation Control',
-    '• MIS Reporting • Excel Pivot Tables • Advanced Excel • MS Office • ServiceNow • SLA Compliance • Quality Assurance',
-    '• Data Entry • Vendor Coordination • Call Handling • Complaint Resolution • Cross-Functional Coordination',
-    '• Process Improvement • Business Partnership Development • Hospitality Operations • Logistics Support • Banking Support',
-    '• Interpersonal Skills • Multitasking • Time Management • Attention to Detail • Problem Solving • Analytical Skills • Team Player',
-    '• Team Leadership • People Management • Coaching & Mentoring • Performance Management • Training & Development',
-    '• Stakeholder Management • Conflict Resolution • Decision Making • Customer Satisfaction (ASAT/CSAT) • Salesforce',
-    '• ChatGPT • Claude • Perplexity • Microsoft Copilot • Gamma AI • Prompt Engineering',
-  ];
-
-  skillsList.forEach((skillLine) => {
-    checkPageBreak(12);
-    doc.text(skillLine, marginX, y);
-    y += 9.5;
+  doc.setFontSize(6.8);
+  doc.setTextColor(25, 25, 25);
+  const skillsParagraph =
+    '• Customer Support • Billing Support • Invoice Processing • Accounts Receivable • Debt Recovery • Credit & Adjustments • Bill to Cash (B2C) • Escalation Handling • Client Relations • Front Desk Operations • Administrative Operations • Appointment Scheduling • Calendar Management • Meeting Coordination • Travel Coordination • Documentation Control • MIS Reporting • Excel Pivot Tables • Advanced Excel • MS Office • ServiceNow • SLA Compliance • Quality Assurance • Data Entry • Vendor Coordination • Call Handling • Complaint Resolution • Cross-Functional Coordination • Process Improvement • Business Partnership Development • Hospitality Operations • Logistics Support • Banking Support • Interpersonal Skills • Multitasking • Time Management • Attention to Detail • Problem Solving • Analytical Skills • Team Player • Team Leadership • People Management • Coaching & Mentoring • Performance Management • Training & Development • Stakeholder Management • Conflict Resolution • Decision Making • Customer Satisfaction (ASAT/CSAT) • Salesforce • ChatGPT • Claude • Perplexity • Microsoft Copilot • Gamma AI • Prompt Engineering';
+  const skillLines = doc.splitTextToSize(skillsParagraph, contentWidth);
+  skillLines.forEach((line: string) => {
+    doc.text(line, marginX, y);
+    y += 8.1;
   });
-  y += 2;
+  y += 3.0;
 
   // --- CERTIFICATIONS ---
-  drawSectionHeader('Certifications');
+  drawSectionHeader('CERTIFICATIONS');
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(51, 65, 85);
-  doc.text('• Power BI Fundamentals • ServiceNow Fundamentals • Customer Service Excellence • Advanced Excel', marginX, y);
-  y += 12;
+  doc.setFontSize(6.8);
+  doc.setTextColor(25, 25, 25);
+  doc.text(
+    '• Power BI Fundamentals • ServiceNow Fundamentals • Customer Service Excellence • Advanced Excel',
+    marginX,
+    y
+  );
+  y += 9.0;
 
   // --- EDUCATION ---
-  drawSectionHeader('Education');
+  drawSectionHeader('EDUCATION');
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(51, 65, 85);
-  doc.text('• MBA in Human Resource Management, Sikkim Manipal University — Kolkata, India (2014)', marginX, y);
-  y += 10;
-  doc.text('• Bachelor of Arts (BA), Calcutta University — Kolkata, India (2008)', marginX, y);
-  y += 12;
+  doc.setFontSize(6.8);
+  doc.setTextColor(25, 25, 25);
+  doc.text(
+    '• MBA in Human Resource Management, Sikkim Manipal University — Kolkata, India (2014)',
+    marginX,
+    y
+  );
+  y += 7.8;
+  doc.text(
+    '• Bachelor of Arts (BA), Calcutta University — Kolkata, India (2008)',
+    marginX,
+    y
+  );
+  y += 9.0;
 
   // --- LANGUAGES ---
-  drawSectionHeader('Languages');
+  drawSectionHeader('LANGUAGES');
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(51, 65, 85);
+  doc.setFontSize(6.8);
+  doc.setTextColor(25, 25, 25);
   doc.text('• English — Professional Proficiency', marginX, y);
-  y += 9.5;
+  y += 7.5;
   doc.text('• Hindi — Professional Proficiency', marginX, y);
-  y += 9.5;
+  y += 7.5;
   doc.text('• Punjabi — Native', marginX, y);
-  y += 9.5;
+  y += 7.5;
   doc.text('• Bengali — Conversational', marginX, y);
-  y += 14;
 
-  // Save the PDF
+  // Guarantee single page
+  while (doc.getNumberOfPages() > 1) {
+    doc.deletePage(doc.getNumberOfPages());
+  }
+
   doc.save('Amrit_Kour_Sohel_CV.pdf');
 }
